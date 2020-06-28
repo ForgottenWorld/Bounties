@@ -1,9 +1,14 @@
 package me.kaotich00.bounties.service;
 
 import me.kaotich00.bounties.api.service.BountyService;
+import me.kaotich00.bounties.utils.ChatFormatter;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class SimpleBountyService implements BountyService {
@@ -26,13 +31,36 @@ public class SimpleBountyService implements BountyService {
     }
 
     @Override
-    public void updatePlayerBounty() {
-
+    public void initPlayerBounty(UUID playerUUID) {
+        this.bounties.put(playerUUID, 0.0);
     }
 
     @Override
-    public Double getPlayerBounty() {
-        return null;
+    public void updatePlayerBounty(UUID playerUUID, Double bounty) {
+        Player player = Bukkit.getPlayer(playerUUID);
+        this.bounties.put(playerUUID, bounty);
+        if(player != null) {
+            player.sendMessage(ChatFormatter.formatSuccessMessage("New bounty: " + ChatColor.GOLD + "$" + getPlayerBounty(playerUUID).get()));
+        }
+    }
+
+    @Override
+    public void addBountyToPlayer(UUID playerUUID, Double amount) {
+        getPlayerBounty(playerUUID).ifPresent(bounty -> {
+            updatePlayerBounty(playerUUID, bounty + amount);
+        });
+    }
+
+    @Override
+    public void subtractBountyFromPlayer(UUID playerUUID, Double amount) {
+        getPlayerBounty(playerUUID).ifPresent(bounty -> {
+            updatePlayerBounty(playerUUID, Math.max(bounty - amount, 0));
+        });
+    }
+
+    @Override
+    public Optional<Double> getPlayerBounty(UUID playerUUID) {
+        return this.bounties.containsKey(playerUUID) ? Optional.ofNullable(this.bounties.get(playerUUID)) : Optional.empty();
     }
 
 }

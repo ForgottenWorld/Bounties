@@ -1,0 +1,4 @@
+bounty:
+  percentage: 10
+  min_bounty_before_percentage: 10
+  default_bounty: 200

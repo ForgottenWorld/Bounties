@@ -4,3 +4,4 @@ main: me.kaotich00.bounties.Bounties
 api-version: 1.16
 authors: [Kaotich00]
 description: A bounty plugin for Spigot 1.16.1
+depend: [Vault]
