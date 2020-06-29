@@ -5,3 +5,9 @@ api-version: 1.16
 authors: [Kaotich00]
 description: A bounty plugin for Spigot 1.16.1
 depend: [Vault]
+loadafter: [Vault]
+commands:
+  bounty:
+    description: Main Bounties command
+    usage: /<command>
+    aliases: [bounty]

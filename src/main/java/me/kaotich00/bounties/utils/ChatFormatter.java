@@ -14,6 +14,12 @@ public class ChatFormatter {
                 ChatColor.RESET;
     }
 
+    public static String chatHeader() {
+        return  ChatColor.YELLOW + "------------------------[ " +
+                ChatColor.GOLD + ChatColor.BOLD + "Bounties" +
+                ChatColor.YELLOW + " ]------------------------";
+    }
+
     public static String formatSuccessMessage(String message) {
         message = pluginPrefix() + ChatColor.GREEN + message;
         return message;
@@ -26,6 +32,14 @@ public class ChatFormatter {
 
     public static String thousandSeparator(Integer value) {
         return NumberFormat.getNumberInstance(Locale.ITALY).format(value);
+    }
+
+    public static String helpMessage() {
+        String message = chatHeader();
+        message = message.concat(
+                "\n" + ChatColor.YELLOW + ">> " + ChatColor.GOLD + "/er " + ChatColor.GREEN + "check "
+        );
+        return message;
     }
 
 }

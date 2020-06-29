@@ -1,5 +1,6 @@
 package me.kaotich00.bounties;
 
+import me.kaotich00.bounties.command.CommandManager;
 import me.kaotich00.bounties.listener.PlayerDeathListener;
 import me.kaotich00.bounties.service.SimpleBountyService;
 import net.milkbowl.vault.economy.Economy;
@@ -25,6 +26,9 @@ public final class Bounties extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering listeners...");
         registerListeners();
 
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[EasyRanking]" + ChatColor.RESET + " Registering commands...");
+        registerCommands();
+
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering economy...");
         if (!setupEconomy()) {
             this.getLogger().severe("This plugin needs Vault and an Economy plugin in order to function!");
@@ -49,6 +53,10 @@ public final class Bounties extends JavaPlugin {
 
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+    }
+
+    public void registerCommands() {
+        getCommand("bounty").setExecutor(new CommandManager(this));
     }
 
     public boolean setupEconomy() {

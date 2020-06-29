@@ -32,6 +32,12 @@ public class PlayerDeathListener implements Listener {
             }
 
             Double playerBounty = bountyService.getPlayerBounty(deadPlayer.getUniqueId()).get();
+
+            if(playerBounty == 0) {
+                killer.sendMessage(ChatFormatter.formatErrorMessage("The player " + ChatColor.GOLD + deadPlayer.getPlayerListName() + ChatColor.RED + " has an empty bounty, nothing was collected"));
+                return;
+            }
+
             Double transactionAmount = 0.0;
 
             Double bountyPercent = Double.valueOf(defaultConfig.getString("bounty.percentage"));
