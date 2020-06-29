@@ -19,7 +19,7 @@ public class CheckCommand extends UserCommand {
 
         if( bountyService.getPlayerBounty(player.getUniqueId()).isPresent()) {
             Double bounty = bountyService.getPlayerBounty(player.getUniqueId()).get();
-            player.sendMessage(ChatFormatter.formatSuccessMessage("Your bounty amounts to " + ChatColor.GOLD + "$" + ChatFormatter.thousandSeparator(bounty.intValue())));
+            player.sendMessage(ChatFormatter.formatSuccessMessage("Your bounty amounts to " + ChatColor.GOLD + "$" + ChatFormatter.thousandSeparator(bounty)));
         } else {
             player.sendMessage(ChatFormatter.formatErrorMessage("You have no bounty, kill anyone to gather the default one"));
         };

@@ -6,5 +6,6 @@ public class CommandTypes {
     public static final boolean COMMAND_FAILURE = false;
 
     public static final String CHECK_COMMAND = "check";
+    public static final String RELOAD_COMMAND = "reload";
 
 }

@@ -2,6 +2,7 @@ package me.kaotich00.bounties.command;
 
 import me.kaotich00.bounties.Bounties;
 import me.kaotich00.bounties.api.command.Command;
+import me.kaotich00.bounties.command.admin.ReloadCommand;
 import me.kaotich00.bounties.command.user.CheckCommand;
 import me.kaotich00.bounties.utils.ChatFormatter;
 import me.kaotich00.bounties.utils.CommandTypes;
@@ -27,6 +28,7 @@ public class CommandManager implements TabExecutor {
 
     private void setup() {
         this.commandRegistry.put(CommandTypes.CHECK_COMMAND, new CheckCommand());
+        this.commandRegistry.put(CommandTypes.RELOAD_COMMAND, new ReloadCommand());
     }
 
     private Command getCommand(String name) {
@@ -58,6 +60,7 @@ public class CommandManager implements TabExecutor {
         if( args.length == 1 ) {
             argsIndex = args[0];
             /* Admin commands */
+            suggestions.add("reload");
             /* User commands */
             suggestions.add("check");
         }

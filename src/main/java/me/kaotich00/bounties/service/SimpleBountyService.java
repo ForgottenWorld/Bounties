@@ -32,7 +32,7 @@ public class SimpleBountyService implements BountyService {
 
     @Override
     public void initPlayerBounty(UUID playerUUID) {
-        this.bounties.put(playerUUID, 0.0);
+        this.bounties.put(playerUUID, 200.0);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SimpleBountyService implements BountyService {
         Player player = Bukkit.getPlayer(playerUUID);
         this.bounties.put(playerUUID, bounty);
         if(player != null) {
-            player.sendMessage(ChatFormatter.formatSuccessMessage("New bounty: " + ChatColor.GOLD + "$" + getPlayerBounty(playerUUID).get()));
+            player.sendMessage(ChatFormatter.formatSuccessMessage("New bounty: " + ChatColor.GOLD + "$" + ChatFormatter.thousandSeparator(getPlayerBounty(playerUUID).get())) );
         }
     }
 
