@@ -38,12 +38,14 @@ public class StorageManager {
 
         FileConfiguration data = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), saveBountiesFile));
 
-        Map<UUID, Double> bounties = new HashMap<>();
-        for(String key : data.getConfigurationSection("bounties").getKeys(false)) {
-            bounties.put(UUID.fromString(key), Double.parseDouble(data.getString("bounties." + key)));
-        }
+        if(data != null) {
+            Map<UUID, Double> bounties = new HashMap<>();
+            for (String key : data.getConfigurationSection("bounties").getKeys(false)) {
+                bounties.put(UUID.fromString(key), Double.parseDouble(data.getString("bounties." + key)));
+            }
 
-        bountyService.setBounties(bounties);
+            bountyService.setBounties(bounties);
+        }
     }
 
 }

@@ -40,6 +40,14 @@ public final class Bounties extends JavaPlugin {
             this.getLogger().severe("This plugin needs Vault and an Economy plugin in order to function!");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
+        boolean isTownyEnable = checkTowny();
+        if(isTownyEnable) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Hooking into TownyAPI...");
+        } else {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Towny not found, skipping.");
+        }
+
     }
 
     @Override
@@ -77,6 +85,10 @@ public final class Bounties extends JavaPlugin {
         }
         economyService = rsp.getProvider();
         return economyService != null;
+    }
+
+    public static boolean checkTowny() {
+        return Bukkit.getPluginManager().getPlugin("Towny") != null;
     }
 
     public void loadBounties() {

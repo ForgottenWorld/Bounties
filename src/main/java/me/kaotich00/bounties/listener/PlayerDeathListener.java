@@ -1,9 +1,14 @@
 package me.kaotich00.bounties.listener;
 
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 import me.kaotich00.bounties.Bounties;
 import me.kaotich00.bounties.api.service.BountyService;
 import me.kaotich00.bounties.service.SimpleBountyService;
 import me.kaotich00.bounties.utils.ChatFormatter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -26,6 +31,37 @@ public class PlayerDeathListener implements Listener {
 
         killer.sendMessage(ChatFormatter.chatHeader());
         deadPlayer.sendMessage(ChatFormatter.chatHeader());
+
+        if(Bounties.checkTowny()) {
+            try {
+                Resident residentKiller = TownyAPI.getInstance().getDataSource().getResident(killer.getName());
+                Resident residentDead = TownyAPI.getInstance().getDataSource().getResident(deadPlayer.getName());
+
+                Town killerTown = residentKiller.getTown();
+                Town deadTown = residentDead.getTown();
+
+                if(killerTown.equals(deadTown)) {
+                    killer.sendMessage(ChatFormatter.formatErrorMessage("The player " + ChatColor.GOLD + deadPlayer.getPlayerListName() + ChatColor.RED + " is part of your town, nothing was collected."));
+                    deadPlayer.sendMessage(ChatFormatter.formatSuccessMessage("You were just killed by " + ChatColor.GOLD + killer.getPlayerListName() + ChatColor.RED + " but you are in the same town, nothing was lost."));
+
+                    killer.sendMessage(ChatFormatter.chatFooter());
+                    deadPlayer.sendMessage(ChatFormatter.chatFooter());
+
+                    return;
+                }
+
+                if(killerTown.isAlliedWith(deadTown)) {
+                    killer.sendMessage(ChatFormatter.formatErrorMessage("The player " + ChatColor.GOLD + deadPlayer.getPlayerListName() + ChatColor.RED + " is part of an allied town, nothing was collected."));
+                    deadPlayer.sendMessage(ChatFormatter.formatSuccessMessage("You were just killed by " + ChatColor.GOLD + killer.getPlayerListName() + ChatColor.RED + " but you are town allies, nothing was lost."));
+
+                    killer.sendMessage(ChatFormatter.chatFooter());
+                    deadPlayer.sendMessage(ChatFormatter.chatFooter());
+
+                    return;
+                }
+            } catch (NotRegisteredException e) {
+            }
+        }
 
         if(bountyService.getPlayerBounty(killer.getUniqueId()).isPresent()) {
 
