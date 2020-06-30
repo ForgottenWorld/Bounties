@@ -8,7 +8,6 @@ import me.kaotich00.bounties.Bounties;
 import me.kaotich00.bounties.api.service.BountyService;
 import me.kaotich00.bounties.service.SimpleBountyService;
 import me.kaotich00.bounties.utils.ChatFormatter;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

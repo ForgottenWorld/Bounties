@@ -22,7 +22,7 @@ public class ChatFormatter {
     }
 
     public static String chatFooter() {
-        return  ChatColor.AQUA + String.join("", Collections.nCopies(53, "_"));
+        return  ChatColor.AQUA + String.join("", Collections.nCopies(53, "-"));
     }
 
     public static String formatSuccessMessage(String message) {
