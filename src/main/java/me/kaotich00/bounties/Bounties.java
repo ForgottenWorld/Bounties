@@ -3,12 +3,15 @@ package me.kaotich00.bounties;
 import me.kaotich00.bounties.command.CommandManager;
 import me.kaotich00.bounties.listener.PlayerDeathListener;
 import me.kaotich00.bounties.service.SimpleBountyService;
+import me.kaotich00.bounties.storage.StorageManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 public final class Bounties extends JavaPlugin {
 
@@ -26,8 +29,11 @@ public final class Bounties extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering listeners...");
         registerListeners();
 
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[EasyRanking]" + ChatColor.RESET + " Registering commands...");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering commands...");
         registerCommands();
+
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Loading bounties from file...");
+        loadBounties();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering economy...");
         if (!setupEconomy()) {
@@ -38,7 +44,8 @@ public final class Bounties extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Saving bounties to file...");
+        saveBounties();
     }
 
     private void loadConfiguration() {
@@ -70,6 +77,20 @@ public final class Bounties extends JavaPlugin {
         }
         economyService = rsp.getProvider();
         return economyService != null;
+    }
+
+    public void loadBounties() {
+        StorageManager storageManager = new StorageManager(this);
+        storageManager.loadBounties();
+    }
+
+    public void saveBounties() {
+        StorageManager storageManager = new StorageManager(this);
+        try {
+            storageManager.saveBounties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static FileConfiguration getDefaultConfig() {

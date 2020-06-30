@@ -31,11 +31,6 @@ public class SimpleBountyService implements BountyService {
     }
 
     @Override
-    public void initPlayerBounty(UUID playerUUID) {
-        this.bounties.put(playerUUID, 200.0);
-    }
-
-    @Override
     public void updatePlayerBounty(UUID playerUUID, Double bounty) {
         Player player = Bukkit.getPlayer(playerUUID);
         this.bounties.put(playerUUID, bounty);
@@ -61,6 +56,16 @@ public class SimpleBountyService implements BountyService {
     @Override
     public Optional<Double> getPlayerBounty(UUID playerUUID) {
         return this.bounties.containsKey(playerUUID) ? Optional.ofNullable(this.bounties.get(playerUUID)) : Optional.empty();
+    }
+
+    @Override
+    public Map<UUID, Double> getBounties() {
+        return this.bounties;
+    }
+
+    @Override
+    public void setBounties(Map<UUID, Double> bounties) {
+        this.bounties = bounties;
     }
 
 }
