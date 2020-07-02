@@ -6,9 +6,11 @@ import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 import me.kaotich00.bounties.Bounties;
 import me.kaotich00.bounties.api.service.BountyService;
+import me.kaotich00.bounties.events.BountyAddEvent;
 import me.kaotich00.bounties.service.SimpleBountyService;
 import me.kaotich00.bounties.storage.StorageManager;
 import me.kaotich00.bounties.utils.ChatFormatter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -120,7 +122,7 @@ public class PlayerDeathListener implements Listener {
             killer.sendMessage(ChatFormatter.formatSuccessMessage("You killed your first player, collecting the default bounty of " + ChatColor.GOLD + "$" + ChatFormatter.thousandSeparator(defaultBounty)));
             deadPlayer.sendMessage(ChatFormatter.formatSuccessMessage("Your were just killed by a bountyless player, you didn't lose anything this time!"));
 
-            bountyService.updatePlayerBounty(killer.getUniqueId(), defaultBounty);
+            bountyService.addBountyToPlayer(killer.getUniqueId(), defaultBounty);
         }
 
         killer.sendMessage(ChatFormatter.chatFooter());

@@ -1,6 +1,8 @@
 package me.kaotich00.bounties.service;
 
 import me.kaotich00.bounties.api.service.BountyService;
+import me.kaotich00.bounties.events.BountyAddEvent;
+import me.kaotich00.bounties.events.BountySubtractEvent;
 import me.kaotich00.bounties.utils.ChatFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,16 +43,28 @@ public class SimpleBountyService implements BountyService {
 
     @Override
     public void addBountyToPlayer(UUID playerUUID, Double amount) {
-        getPlayerBounty(playerUUID).ifPresent(bounty -> {
-            updatePlayerBounty(playerUUID, bounty + amount);
-        });
+        if(!getPlayerBounty(playerUUID).isPresent()) {
+            this.bounties.put(playerUUID, 0.0);
+        }
+
+        Double bounty = getPlayerBounty(playerUUID).get();
+        updatePlayerBounty(playerUUID, bounty + amount);
+
+        BountyAddEvent bountyAddEvent = new BountyAddEvent(playerUUID, amount);
+        Bukkit.getServer().getPluginManager().callEvent(bountyAddEvent);
     }
 
     @Override
     public void subtractBountyFromPlayer(UUID playerUUID, Double amount) {
-        getPlayerBounty(playerUUID).ifPresent(bounty -> {
-            updatePlayerBounty(playerUUID, Math.max(bounty - amount, 0));
-        });
+        if(!getPlayerBounty(playerUUID).isPresent()) {
+            this.bounties.put(playerUUID, 0.0);
+        }
+
+        Double bounty = getPlayerBounty(playerUUID).get();
+        updatePlayerBounty(playerUUID, Math.max(bounty - amount, 0));
+
+        BountySubtractEvent bountySubtractEvent = new BountySubtractEvent(playerUUID, amount);
+        Bukkit.getServer().getPluginManager().callEvent(bountySubtractEvent);
     }
 
     @Override
