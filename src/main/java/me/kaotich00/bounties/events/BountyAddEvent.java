@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class BountyAddEvent extends Event {
 
-    private final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
     private final UUID playerUUID;
     private final Double amount;
 
@@ -19,6 +19,10 @@ public class BountyAddEvent extends Event {
     @Override
     public HandlerList getHandlers() {
         return this.handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     public UUID getPlayerUUID() {
