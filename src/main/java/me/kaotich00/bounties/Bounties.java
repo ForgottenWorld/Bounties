@@ -33,7 +33,11 @@ public final class Bounties extends JavaPlugin {
         registerCommands();
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Loading bounties from file...");
-        loadBounties();
+        try {
+            loadBounties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[Bounties]" + ChatColor.RESET + " Registering economy...");
         if (!setupEconomy()) {
@@ -91,13 +95,14 @@ public final class Bounties extends JavaPlugin {
         return Bukkit.getPluginManager().getPlugin("Towny") != null;
     }
 
-    public void loadBounties() {
-        StorageManager storageManager = new StorageManager(this);
+    public void loadBounties() throws IOException {
+        StorageManager storageManager = StorageManager.getInstance();
         storageManager.loadBounties();
+        storageManager.updateWorldConfigs();
     }
 
     public void saveBounties() {
-        StorageManager storageManager = new StorageManager(this);
+        StorageManager storageManager = StorageManager.getInstance();
         try {
             storageManager.saveBounties();
         } catch (IOException e) {
@@ -109,9 +114,12 @@ public final class Bounties extends JavaPlugin {
         return defaultConfig;
     }
 
-    public void reloadDefaultConfig() {
+    public void reloadDefaultConfig() throws IOException {
         reloadConfig();
         defaultConfig = getConfig();
+        StorageManager storageManager = StorageManager.getInstance();
+        storageManager.updateWorldConfigs();
+        storageManager.reloadWorldConfigs();
     }
 
 }

@@ -5,6 +5,8 @@ import me.kaotich00.bounties.command.api.AdminCommand;
 import me.kaotich00.bounties.utils.ChatFormatter;
 import org.bukkit.command.CommandSender;
 
+import java.io.IOException;
+
 public class ReloadCommand extends AdminCommand {
 
     @Override
@@ -12,9 +14,13 @@ public class ReloadCommand extends AdminCommand {
         super.onCommand(sender, args);
 
         Bounties plugin = Bounties.getPlugin(Bounties.class);
-        plugin.reloadDefaultConfig();
-
-        sender.sendMessage(ChatFormatter.formatSuccessMessage("Reloaded config.yml"));
+        try {
+            plugin.reloadDefaultConfig();
+            sender.sendMessage(ChatFormatter.formatSuccessMessage("Reloaded config.yml"));
+            sender.sendMessage(ChatFormatter.formatSuccessMessage("Reloaded worlds.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

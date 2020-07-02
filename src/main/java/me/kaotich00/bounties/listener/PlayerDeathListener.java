@@ -7,6 +7,7 @@ import com.palmergames.bukkit.towny.object.Town;
 import me.kaotich00.bounties.Bounties;
 import me.kaotich00.bounties.api.service.BountyService;
 import me.kaotich00.bounties.service.SimpleBountyService;
+import me.kaotich00.bounties.storage.StorageManager;
 import me.kaotich00.bounties.utils.ChatFormatter;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,8 +24,17 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
-        FileConfiguration defaultConfig = Bounties.getDefaultConfig();
         BountyService bountyService = SimpleBountyService.getInstance();
+        StorageManager storageManager = StorageManager.getInstance();
+
+        FileConfiguration defaultConfig = Bounties.getDefaultConfig();
+        FileConfiguration worldConfig = storageManager.getWorldConfig();
+
+        String worldName = event.getEntity().getPlayer().getWorld().getName();
+        if(!worldConfig.getBoolean(worldName + ".enabled")) {
+            return;
+        }
+
         Player deadPlayer = event.getEntity();
         Player killer = event.getEntity().getKiller();
 
@@ -86,8 +96,11 @@ public class PlayerDeathListener implements Listener {
 
             Double transactionAmount = 0.0;
 
-            Double bountyPercent = Double.valueOf(defaultConfig.getString("bounty.percentage"));
-            Double minBountyBeforePercentage = Double.valueOf(defaultConfig.getString("bounty.min_bounty_before_percentage"));
+            Double bountyPercent = Double.valueOf(worldConfig.getString(worldName + ".percentage"));
+            Double minBountyBeforePercentage = Double.valueOf(worldConfig.getString(worldName + ".min_bounty_before_percentage"));
+
+            //Double bountyPercent = Double.valueOf(defaultConfig.getString("bounty.percentage"));
+            //Double minBountyBeforePercentage = Double.valueOf(defaultConfig.getString("bounty.min_bounty_before_percentage"));
 
             if(playerBounty <= minBountyBeforePercentage) {
                 transactionAmount = playerBounty;
