@@ -45,7 +45,7 @@ public class ChatFormatter {
     public static String helpMessage() {
         String message = chatHeader();
         message = message.concat(
-                "\n" + ChatColor.GRAY + ">> " + ChatColor.DARK_AQUA + "/bounty " + ChatColor.AQUA + "check " +
+                "\n" + ChatColor.GRAY + ">> " + ChatColor.DARK_AQUA + "/bounty " + ChatColor.AQUA + "check " + ChatColor.GRAY + "[player]" +
                 "\n" + ChatColor.GRAY + ">> " + ChatColor.DARK_AQUA + "/bounty " + ChatColor.AQUA + "reload "
         );
         return message;

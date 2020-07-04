@@ -7,8 +7,10 @@ import me.kaotich00.bounties.command.user.CheckCommand;
 import me.kaotich00.bounties.utils.ChatFormatter;
 import me.kaotich00.bounties.utils.CommandTypes;
 import me.kaotich00.bounties.utils.NameUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,12 +59,23 @@ public class CommandManager implements TabExecutor {
         String argsIndex = "";
 
         /* Suggest child commands */
-        if( args.length == 1 ) {
+        if(args.length == 1) {
             argsIndex = args[0];
             /* Admin commands */
             suggestions.add("reload");
             /* User commands */
             suggestions.add("check");
+        }
+
+        if(args.length == 2) {
+            argsIndex = args[1];
+            switch(args[1]) {
+                case CommandTypes.CHECK_COMMAND:
+                    for(Player player: Bukkit.getOnlinePlayers()) {
+                        suggestions.add(player.getPlayerListName());
+                    }
+                    break;
+            }
         }
 
         return NameUtil.filterByStart(suggestions, argsIndex);
