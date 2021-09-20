@@ -1,6 +1,6 @@
 package me.kaotich00.bounties;
 
-import me.kaotich00.bounties.command.CommandManager;
+import me.kaotich00.bounties.commands.CommandManager;
 import me.kaotich00.bounties.listener.PlayerDeathListener;
 import me.kaotich00.bounties.service.SimpleBountyService;
 import me.kaotich00.bounties.storage.StorageManager;
@@ -12,6 +12,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public final class Bounties extends JavaPlugin {
 
@@ -75,7 +76,7 @@ public final class Bounties extends JavaPlugin {
     }
 
     public void registerCommands() {
-        getCommand("bounty").setExecutor(new CommandManager(this));
+        Objects.requireNonNull(getCommand("bounty")).setExecutor(new CommandManager());
     }
 
     public boolean setupEconomy() {

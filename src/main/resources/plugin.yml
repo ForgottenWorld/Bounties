@@ -3,7 +3,7 @@ version: ${project.version}
 main: me.kaotich00.bounties.Bounties
 api-version: 1.16
 authors: [Kaotich00]
-description: A bounty plugin for Spigot 1.16.1
+description: A bounty plugin for Spigot 1.16.5
 depend: [Vault]
 softdepend: [Towny]
 loadafter: [Vault]
@@ -12,3 +12,11 @@ commands:
     description: Main Bounties command
     usage: /<command>
     aliases: [bounty]
+
+permissions:
+  bounty.reload:
+    description: create command permission
+    default: op
+  bounty.check:
+    description: create command permission
+    default: true
