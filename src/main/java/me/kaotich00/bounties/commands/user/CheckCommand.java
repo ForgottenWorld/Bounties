@@ -52,7 +52,7 @@ public class CheckCommand extends SubCommand {
             }
 
             if( bountyService.getPlayerBounty(onlinePlayerToCheck.getUniqueId()).isPresent()) {
-                Double bounty = bountyService.getPlayerBounty(sender.getUniqueId()).get();
+                Double bounty = bountyService.getPlayerBounty(onlinePlayerToCheck.getUniqueId()).get();
                 sender.sendMessage(ChatFormatter.formatSuccessMessage("The player " + ChatColor.GOLD + nameToCheck + ChatColor.GREEN + " bounty amounts to " + ChatColor.GOLD + "$" + ChatFormatter.thousandSeparator(bounty)));
             } else {
                 sender.sendMessage(ChatFormatter.formatErrorMessage("The player " + ChatColor.GOLD + nameToCheck + ChatColor.RED + " has no bounty"));
