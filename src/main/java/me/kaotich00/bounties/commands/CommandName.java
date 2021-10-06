@@ -5,4 +5,5 @@ public class CommandName {
     public static final String CHECK = "check";
     public static final String RELOAD = "reload";
 
+    public static final String MODIFY = "modify";
 }

@@ -15,8 +15,11 @@ commands:
 
 permissions:
   bounty.reload:
-    description: create command permission
+    description: Reload configuration file
+    default: op
+  bounty.modify:
+    description: Modify player bounty
     default: op
   bounty.check:
-    description: create command permission
+    description: Check player bounty
     default: true

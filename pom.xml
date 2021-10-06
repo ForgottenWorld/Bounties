@@ -6,7 +6,7 @@
 
     <groupId>me.kaotich00</groupId>
     <artifactId>bounties</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
 
     <name>Bounties</name>
@@ -42,7 +42,7 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <outputDirectory>z:\Users\Simone R\Desktop\Spigot\plugins</outputDirectory>
+                            <!--<outputDirectory>z:\Users\Simone R\Desktop\Spigot\plugins</outputDirectory>-->
                         </configuration>
                     </execution>
                 </executions>

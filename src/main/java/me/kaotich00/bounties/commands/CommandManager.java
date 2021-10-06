@@ -1,5 +1,6 @@
 package me.kaotich00.bounties.commands;
 
+import me.kaotich00.bounties.commands.admin.ModifyCommand;
 import me.kaotich00.bounties.commands.admin.ReloadCommand;
 import me.kaotich00.bounties.commands.user.CheckCommand;
 import me.kaotich00.bounties.utils.ChatFormatter;
@@ -21,6 +22,7 @@ public class CommandManager implements TabExecutor{
     public CommandManager(){
         //** admin commands **//
         subcommands.add(new ReloadCommand());
+        subcommands.add(new ModifyCommand());
 
         //** user commands **//
         subcommands.add(new CheckCommand());
